@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# INTERFACE="$1"
+# TTY="$2"		# "" for xl2tp
+# SPEED="$3"		# 0 for xl2tp
+# LOCAL_IP="$4"
+# REMOTE_IP="$5"
+# IPOPT="$6"
+
+# env:
+#  IFNAME=ppp0
+#  DNS1=8.8.8.8
+#  DNS2=8.8.8.8
+#  IPLOCAL=192.168.1.1
+#  IPREMOTE=192.168.1.2
+#  LLLOCAL=fe80::300e:4230:c8ee:62d5
+#  LLREMOTE=fe80::f99b:dd07:7567:4453
+#  USEPEERDNS=1
+#  PPPD_PID=123
+#  PEERNAME=abc		# if authenticated
+
+cat /etc/ppp/networks \
+| cut -f1 -d'#'
+| while read peer subnet rest
+do
+  [ -z "$peer" -o -z "$subnet" ] && continue
+  [ "$peer" != "$PEERNAME" ] && continue
+  ip route add "$subnet" via "$IPREMOTE" dev "$IFNAME"
+done
+
+[ -x /etc/ppp/ip-up.local ] && /etc/ppp/ip-up.local "$@"

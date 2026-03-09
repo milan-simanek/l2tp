@@ -1,0 +1,12 @@
+ms-dns  8.8.8.8		# push DNS server to clients
+refuse-pap		# refuse PAP (plaintext, insecure)
+refuse-eap		# refuse EAP
+noccp			# no compression
+auth			# require peer to authenticate
+idle 1800		# disconnect after 1800s idle
+mtu 1410		# max transmission unit (lower for VPN)
+mru 1410		# max receive unit
+nodefaultroute		# don't change the default route
+#debug
+#proxyarp		# respond to ARP for client IPs
+connect-delay 5000	# milliseconds to wait before starting

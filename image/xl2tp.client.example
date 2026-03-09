@@ -1,0 +1,8 @@
+[global]
+port = 1701
+
+[lac my-vpn]
+lns = 111.222.333.444
+ppp debug = yes
+pppoptfile = /etc/ppp/options
+length bit = yes

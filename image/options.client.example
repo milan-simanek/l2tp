@@ -1,0 +1,14 @@
+ipcp-accept-local	# accept IP assigned by server
+ipcp-accept-remote	# accept remote IP from server
+refuse-pap		# refuse PAP (plaintext, insecure)
+refuse-eap		# refuse EAP
+noccp			# no compression
+auth			# require peer to authenticate
+idle 1800		# disconnect after 1800s idle
+mtu 1410		# max transmission unit (lower for VPN)
+mru 1410		# max receive unit
+noipdefault		# don't use local IP as default
+nodefaultroute		# don't change the default route
+usepeerdns		# use DNS servers provided by peer
+connect-delay 5000	# milliseconds to wait before starting
+name myusername		# username for authentication
