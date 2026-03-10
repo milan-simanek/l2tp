@@ -19,6 +19,18 @@
 #  PPPD_PID=123
 #  PEERNAME=abc		# if authenticated
 
+rm -f "/run/ifname-$IFNAME"
+if [ -n "$DEVNAMEPREFIX" -a -n "$PEERNAME" ]
+then
+  oldname="$IFNAME"
+  newname="$DEVNAMEPREFIX$PEERNAME"
+  if ip link set "$oldname" name "$newname"
+  then
+    IFNAME="$newname"
+    export IFNAME
+  fi
+fi
+  
 cat /etc/ppp/networks \
 | cut -f1 -d'#' \
 | while read peer subnet rest
@@ -28,4 +40,4 @@ do
   ip route add "$subnet" via "$IPREMOTE" dev "$IFNAME"
 done
 
-[ -x /etc/ppp/ip-up.local ] && /etc/ppp/ip-up.local "$@"
+[ -x /etc/ppp/ip-up.local ] && /etc/ppp/ip-up.local "$IFNAME" "$2" "$3" "$4" "$5" "$6"

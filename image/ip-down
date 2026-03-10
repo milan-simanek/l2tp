@@ -19,6 +19,17 @@
 #  PPPD_PID=123
 #  PEERNAME=abc		# if authenticated
 
+mapfile="/run/ifname-$IFNAME"
+if [ -n "$DEVNAMEPREFIX" -a -f "$mapfile" ]
+then
+  if read realname < "$mapfile" && [ -n "$realname" ] && ip link show dev "$realname" &> /dev/null
+  then
+    IFNAME="$realname"
+  else
+    unset realname
+  fi
+fi
+
 cat /etc/ppp/networks \
 | cut -f1 -d'#' \
 | while read peer subnet rest
@@ -28,4 +39,6 @@ do
   ip route del "$subnet" via "$IPREMOTE" dev "$IFNAME"
 done
 
-[ -x /etc/ppp/ip-down.local ] && /etc/ppp/ip-down.local "$@"
+[ -x /etc/ppp/ip-down.local ] && /etc/ppp/ip-down.local "$IFNAME" "$2" "$3" "$4" "$5" "$6"
+
+[ -n "$realname" ] && rm -f "$realname"
