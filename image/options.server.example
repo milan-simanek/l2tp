@@ -1,6 +1,7 @@
 ms-dns  8.8.8.8		# push DNS server to clients
 refuse-pap		# refuse PAP (plaintext, insecure)
 refuse-eap		# refuse EAP
+require-chap		# require CHAP authentication
 noccp			# no compression
 auth			# require peer to authenticate
 idle 1800		# disconnect after 1800s idle
