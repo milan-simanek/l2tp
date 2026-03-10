@@ -20,14 +20,15 @@
 #  PEERNAME=abc		# if authenticated
 
 rm -f "/run/ifname-$IFNAME"
-if [ -n "$DEVNAMEPREFIX" -a -n "$PEERNAME" ]
+if [ -f /etc/ppp/devnameprefix ] && read prefix notused < /etc/ppp/devnameprefix && [ -n "$prefix" -a -n "$PEERNAME" ]
 then
   oldname="$IFNAME"
-  newname="$DEVNAMEPREFIX$PEERNAME"
+  newname="$prefix$PEERNAME"
   if ip link set "$oldname" name "$newname"
   then
     IFNAME="$newname"
     export IFNAME
+    echo "$IFNAME" > "/run/ifname-$oldname"
   fi
 fi
   

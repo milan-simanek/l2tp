@@ -20,14 +20,10 @@
 #  PEERNAME=abc		# if authenticated
 
 mapfile="/run/ifname-$IFNAME"
-if [ -n "$DEVNAMEPREFIX" -a -f "$mapfile" ]
+if [ -f /etc/ppp/devnameprefix -a -f "$mapfile" ] && read realname < "$mapfile" && [ -n "$realname" ] \
+&& ip link show dev "$realname" &> /dev/null
 then
-  if read realname < "$mapfile" && [ -n "$realname" ] && ip link show dev "$realname" &> /dev/null
-  then
     IFNAME="$realname"
-  else
-    unset realname
-  fi
 fi
 
 cat /etc/ppp/networks \
@@ -41,4 +37,4 @@ done
 
 [ -x /etc/ppp/ip-down.local ] && /etc/ppp/ip-down.local "$IFNAME" "$2" "$3" "$4" "$5" "$6"
 
-[ -n "$realname" ] && rm -f "$realname"
+[ -n "$mapfile" ] && rm -f "$mapfile"

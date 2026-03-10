@@ -1,5 +1,7 @@
 #!/bin/sh
 
+[ -n "$DEVNAMEPREFIX" ] && echo "$DEVNAMEPREFIX" > /etc/ppp/devnameprefix
+
 cleanup() {
   kill `cat /run/xl2tpd.pid`
   pkill syslogd
