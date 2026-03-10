@@ -20,7 +20,7 @@
 #  PEERNAME=abc		# if authenticated
 
 cat /etc/ppp/networks \
-| cut -f1 -d'#'
+| cut -f1 -d'#' \
 | while read peer subnet rest
 do
   [ -z "$peer" -o -z "$subnet" ] && continue
