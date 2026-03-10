@@ -7,7 +7,7 @@ RUN cd / \
     && make
 
 FROM alpine
-LABEL maintainer=Milan Simanek milan.simanek@misisoft.net
+LABEL maintainer="Milan Simanek milan.simanek@misisoft.net"
 RUN    apk add ppp \
     && mknod /dev/ppp c 108 0 \
     && mkdir -p /var/run/xl2tpd /etc/xl2tpd
