@@ -24,13 +24,17 @@ if [ -f /etc/ppp/devnameprefix ] && read prefix notused < /etc/ppp/devnameprefix
 then
   oldname="$IFNAME"
   newname="$prefix$PEERNAME"
-  if ip link set "$oldname" name "$newname"
+  if ip link set "$oldname" name "$newname"	# try to rename while UP
   then
     IFNAME="$newname"
-    export IFNAME
-    echo "$IFNAME" > "/run/ifname-$oldname"
+  else
+    ip link set "$oldname" down
+    ip link set "$oldname" name "$newname" && IFNAME="$newname"
+    ip link set "$IFNAME" up
   fi
 fi
+export IFNAME
+echo "$IFNAME" > "/run/ifname-$oldname"
 
 [ -n "$6" ] && echo "$IFNAME" > "/run/lac-$6"
 
