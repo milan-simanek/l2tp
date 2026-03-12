@@ -1,5 +1,4 @@
-push:
-	IMAGE?=docker.io/milansimanek/xl2tp
+IMAGE?=docker.io/milansimanek/l2tp
 # the current tag is stored in "./tag" file
 TAG:=$(strip $(shell head -n 1 tag))
 TAG_GIT=$(IMAGE):$(TAG)
@@ -20,4 +19,3 @@ push: image
 
 
 clean:
-	rm -f shared-data-provisioner m
