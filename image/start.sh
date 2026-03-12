@@ -27,15 +27,14 @@ do
 
     sleep 10
 
-    [ -f /run/ifname ] \
-    && read ifname < /run/ifname \
-    && [ -n "$ifname" ] \
-    && ip link show "$ifname" | grep -q '\<UP\>' && continue
-
     sed -n 's/^[[:space:]]*\[ *lac  *\([^[:space:]][^[:space:]]*\)[[:space:]]*\].*$/\1/p' \
         /etc/xl2tpd/xl2tpd.conf \
     | while read name x
     do
+      [ -f /run/lac-$name ] \
+      && read ifname < /run/lac-$name \
+      && [ -n "$ifname" ] \
+      && ip link show "$ifname" | grep -q '\<UP\>' && continue
       echo "reconnecting $name"
 #      echo "c $name" > /var/run/xl2tpd/l2tp-control
       xl2tpd-control connect-lac "$name"

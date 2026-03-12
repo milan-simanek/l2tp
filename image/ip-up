@@ -5,7 +5,7 @@
 # SPEED="$3"		# 0 for xl2tp
 # LOCAL_IP="$4"
 # REMOTE_IP="$5"
-# IPOPT="$6"
+# IPOPT="$6"		# options file should set it to xl2tpd lac name
 
 # env:
 #  IFNAME=ppp0
@@ -31,7 +31,9 @@ then
     echo "$IFNAME" > "/run/ifname-$oldname"
   fi
 fi
-  
+
+[ -n "$6" ] && echo "$IFNAME" > "/run/lac-$6"
+
 cat /etc/ppp/networks \
 | cut -f1 -d'#' \
 | while read peer subnet rest

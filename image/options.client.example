@@ -13,3 +13,4 @@ nodefaultroute		# don't change the default route
 usepeerdns		# use DNS servers provided by peer
 connect-delay 5000	# milliseconds to wait before starting
 name myusername		# username for authentication
+ipparam	my-vpn		# xl2tpd LAC name
