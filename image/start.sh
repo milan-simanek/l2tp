@@ -37,6 +37,8 @@ do
       && ip link show "$ifname" | grep -q '\<UP\>' && continue
       echo "reconnecting $name"
 #      echo "c $name" > /var/run/xl2tpd/l2tp-control
+      xl2tpd-control disconnect-lac "$name"
+      sleep 1
       xl2tpd-control connect-lac "$name"
       break
     done
