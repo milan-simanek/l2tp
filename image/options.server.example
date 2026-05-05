@@ -4,10 +4,12 @@ refuse-eap		# refuse EAP
 require-chap		# require CHAP authentication
 noccp			# no compression
 auth			# require peer to authenticate
-idle 1800		# disconnect after 1800s idle
+idle 0			# do not disconnect when idle (idle timeout in [s])
 mtu 1410		# max transmission unit (lower for VPN)
 mru 1410		# max receive unit
 nodefaultroute		# don't change the default route
 #debug
 #proxyarp		# respond to ARP for client IPs
 connect-delay 5000	# milliseconds to wait before starting
+lcp-echo-interval 60	# periodic LCP echo request [s]
+lcp-echo-failure 4	# disconnect if 4 echo probes fail
