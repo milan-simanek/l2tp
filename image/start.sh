@@ -10,7 +10,7 @@ cleanup() {
 
 trap "cleanup" TERM
 
-syslogd
+syslogd -O /proc/1/fd/2		# forward messages to STDERR of process[PID=1]
 
 # Keep the tunnel interface up
 while sleep 1
