@@ -8,7 +8,7 @@ RUN cd / \
 
 FROM alpine
 LABEL maintainer="Milan Simanek milan.simanek@misisoft.net"
-RUN    apk add ppp \
+RUN    apk add ppp iptables \
     && mknod /dev/ppp c 108 0 \
     && mkdir -p /var/run/xl2tpd /etc/xl2tpd
 COPY --from=builder /xl2tpd/xl2tpd /xl2tpd/xl2tpd-control /bin
