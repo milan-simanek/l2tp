@@ -18,6 +18,9 @@
 #  USEPEERDNS=1
 #  PPPD_PID=123
 #  PEERNAME=abc		# if authenticated
+#  ROUTEMETRIC=1000
+
+[ -z "$ROUTEMETRIC" ] && ROUTEMETRIC=1000
 
 rm -f "/run/ifname-$IFNAME"
 if [ -f /etc/ppp/devnameprefix ] && read prefix notused < /etc/ppp/devnameprefix && [ -n "$prefix" -a -n "$PEERNAME" ]
@@ -44,7 +47,7 @@ cat /etc/ppp/networks \
 do
   [ -z "$peer" -o -z "$subnet" ] && continue
   [ "$peer" != "$PEERNAME" ] && continue
-  ip route add "$subnet" via "$IPREMOTE" dev "$IFNAME"
+  ip route add "$subnet" via "$IPREMOTE" dev "$IFNAME" metric "$ROUTEMETRIC"
 done
 
 [ -x /etc/ppp/ip-up.local ] && /etc/ppp/ip-up.local "$IFNAME" "$2" "$3" "$4" "$5" "$6"
